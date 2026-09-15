@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Little Moon 🌙</title>
+<style>
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+body{
+  overflow:hidden;background:linear-gradient(#17142d,#34234d 58%,#f0a8c9);
+  color:#fff;
+}
+.scene{position:relative;width:100vw;height:100vh;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.stars{position:absolute;inset:0;background-image:
+ radial-gradient(circle at 10% 15%,#fff 0 1px,transparent 2px),
+ radial-gradient(circle at 25% 35%,#fff 0 1px,transparent 2px),
+ radial-gradient(circle at 42% 12%,#fff 0 1px,transparent 2px),
+ radial-gradient(circle at 65% 22%,#fff 0 1px,transparent 2px),
+ radial-gradient(circle at 82% 12%,#fff 0 1px,transparent 2px),
+ radial-gradient(circle at 90% 42%,#fff 0 1px,transparent 2px),
+ radial-gradient(circle at 15% 65%,#fff 0 1px,transparent 2px),
+ radial-gradient(circle at 72% 62%,#fff 0 1px,transparent 2px);
+ opacity:.7;animation:twinkle 3s infinite alternate}
+@keyframes twinkle{to{opacity:1}}
+.moon{position:absolute;top:8%;right:10%;width:105px;height:105px;border-radius:50%;background:#fff5dc;box-shadow:0 0 35px #ffe8bd}
+.card{position:relative;z-index:3;width:min(90%,520px);padding:30px 24px;text-align:center;border:1px solid rgba(255,255,255,.28);border-radius:30px;background:rgba(34,22,54,.72);backdrop-filter:blur(12px);box-shadow:0 20px 70px rgba(0,0,0,.25)}
+h1{font-size:clamp(30px,8vw,52px);margin:8px 0 12px}
+h2{font-size:30px;margin:8px 0 12px}
+p{font-size:18px;line-height:1.55;margin:8px 0 20px}
+.small{font-size:14px;opacity:.78}
+button{border:0;border-radius:999px;padding:14px 23px;margin:7px;font-size:17px;font-weight:700;cursor:pointer;background:#ffd2e5;color:#4d2745;box-shadow:0 7px 20px rgba(0,0,0,.18);transition:.2s}
+button:hover{transform:scale(1.06)}
+.emoji{font-size:70px;letter-spacing:10px}
+.hidden{display:none!important}
+.characters{font-size:62px;margin:12px 0;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.choice-area{position:relative;height:90px;margin-top:10px}
+#noBtn{position:relative}
+.progress{font-size:13px;opacity:.65;margin-top:16px}
+.road{position:absolute;bottom:0;left:0;right:0;height:22vh;background:#2b2940;transform:perspective(250px) rotateX(3deg);transform-origin:bottom}
+.road:after{content:"";position:absolute;left:0;right:0;top:45%;height:5px;background:repeating-linear-gradient(90deg,#fff 0 55px,transparent 55px 105px);opacity:.8}
+.car{font-size:75px;position:absolute;bottom:13vh;left:-120px;z-index:2;transition:left 2.8s cubic-bezier(.2,.7,.2,1)}
+.sign{position:absolute;bottom:19vh;right:8%;z-index:2;font-weight:800;background:#d7b37a;color:#38271b;border:5px solid #6c4d32;padding:10px 13px;border-radius:4px;transform:rotate(-2deg);box-shadow:4px 6px 0 rgba(0,0,0,.2)}
+.hearts{position:absolute;inset:0;pointer-events:none;z-index:5}
+.heart{position:absolute;bottom:-40px;font-size:26px;animation:float 3.5s linear forwards}
+@keyframes float{to{transform:translateY(-110vh) rotate(25deg);opacity:0}}
+.reveal{background:linear-gradient(#17142d,#49345e 55%,#eaa4c6)}
+.final-date{font-size:clamp(29px,8vw,48px);font-weight:900;margin:12px 0;color:#ffd9e8}
+@media(max-height:650px){.card{padding:20px 18px}.emoji,.characters{font-size:52px}.moon{width:75px;height:75px}}
+</style>
+</head>
+<body>
+<div class="scene" id="app">
+  <div class="stars"></div><div class="moon"></div><div class="hearts" id="hearts"></div>
+  <div class="road"></div>
+  <div class="card" id="card"></div>
+</div>
+
+<script>
+const card=document.getElementById("card"), app=document.getElementById("app"), hearts=document.getElementById("hearts");
+let step=0;
+
+function render(html){card.innerHTML=html}
+function heartsBurst(n=35){
+  for(let i=0;i<n;i++){
+    const s=document.createElement("span"); s.className="heart";
+    s.textContent=["💗","💕","✨","🌙"][Math.floor(Math.random()*4)];
+    s.style.left=Math.random()*100+"vw"; s.style.animationDelay=(Math.random()*.8)+"s";
+    hearts.appendChild(s); setTimeout(()=>s.remove(),4300);
+  }
+}
+function start(){
+ render(`<div class="emoji">🌙</div><h1>Our Little Moon</h1>
+ <p>A tiny little world I made for my favourite Duck. 🐥</p>
+ <p class="small">There are a few things waiting for you inside…</p>
+ <button onclick="story()">🐥 Tap to enter ♡</button>`);
+}
+function story(){
+ render(`<div class="characters">🐥 🐢</div><h2>Once upon a moon…</h2>
+ <p>There was a little Princess Duck 🐥 and a slightly silly Turtle 🐢 who somehow found their way into the same little world.</p>
+ <p>And the moon? 🌙 It quietly watched all the little moments in between.</p>
+ <button onclick="memory()">🌟 Find the next star</button>`);
+}
+function memory(){
+ render(`<div class="emoji">⭐</div><h2>A little reminder</h2>
+ <p>You don't always need a big adventure to make a memory.</p>
+ <p>Sometimes it's just <b>Duck + Turtle + a long drive + random conversations + food stops + laughing at nonsense.</b> 🤍</p>
+ <button onclick="roadtrip()">🚗 Keep going…</button>`);
+}
+function roadtrip(){
+ render(`<div class="characters">🐥 🐢</div><h2>One tiny problem…</h2>
+ <p>Princess Duck has been asking where Turtle is taking her.</p>
+ <p>Turtle refuses to tell her. 🤐</p>
+ <p class="small">But there's one last question before we leave…</p>
+ <button onclick="question()">🌙 Continue</button>`);
+}
+function question(){
+ render(`<div class="emoji">🌙</div><h2>One last question, my little Duck…</h2>
+ <p><b>Are you ready?</b> 🐥</p>
+ <div class="choice-area">
+   <button onclick="yes()">YES 🥰</button>
+   <button id="noBtn" onmouseenter="runAway()" onclick="runAway()">NO 🙈</button>
+ </div>
+ <div class="progress">Psst… Turtle has already started the car. 🐢🚗</div>`);
+}
+function runAway(){
+ const b=document.getElementById("noBtn");
+ b.style.position="absolute";
+ b.style.left=(Math.random()*240-120)+"px";
+ b.style.top=(Math.random()*50-25)+"px";
+ b.textContent=["NO 🙈","Nice try 😭","Nope! 🐢","Try again! 😂"][Math.floor(Math.random()*4)];
+}
+function yes(){
+ heartsBurst(60);
+ card.classList.add("reveal");
+ render(`<div class="emoji">🐥 🐢</div><h2>GET READY…</h2>
+ <div class="final-date">Our Malaysia Day Trip 🇲🇾</div>
+ <div style="font-size:30px;font-weight:900">26 September 2026</div>
+ <p>Just you, me, a car, and a little adventure under the moon. 🌙🚗</p>
+ <p><b>No work. No worries. Just us.</b> 🤍</p>
+ <button onclick="drive()">🐥 Let's go, Turtle! 🐢💨</button>`);
+ setTimeout(drive,650);
+}
+function drive(){
+ document.querySelector(".car")?.remove();
+ const c=document.createElement("div"); c.className="car"; c.textContent="🐢🚗";
+ app.appendChild(c);
+ const s=document.createElement("div"); s.className="sign"; s.textContent="🇸🇬 → 🇲🇾"; app.appendChild(s);
+ requestAnimationFrame(()=>{c.style.left="110vw"});
+ heartsBurst(25);
+}
+start();
+</script>
+</body>
+</html>
